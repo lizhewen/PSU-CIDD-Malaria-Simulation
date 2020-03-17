@@ -177,14 +177,14 @@ template <typename T> std::istream &operator>>(std::istream &in, std::optional<T
 }
 #endif
 
-#if CLI11_EXPERIMENTAL_OPTIONAL
-template <typename T> std::istream &operator>>(std::istream &in, std::experimental::optional<T> &val) {
-    T v;
-    in >> v;
-    val = v;
-    return in;
-}
-#endif
+// #if CLI11_EXPERIMENTAL_OPTIONAL
+// template <typename T> std::istream &operator>>(std::istream &in, std::experimental::optional<T> &val) {
+//     T v;
+//     in >> v;
+//     val = v;
+//     return in;
+// }
+// #endif
 
 #if CLI11_BOOST_OPTIONAL
 template <typename T> std::istream &operator>>(std::istream &in, boost::optional<T> &val) {
@@ -199,7 +199,7 @@ template <typename T> std::istream &operator>>(std::istream &in, boost::optional
 #if CLI11_STD_OPTIONAL
 using std::optional;
 #elif CLI11_EXPERIMENTAL_OPTIONAL
-using std::experimental::optional;
+//using std::experimental::optional;
 #elif CLI11_BOOST_OPTIONAL
 using boost::optional;
 #endif
