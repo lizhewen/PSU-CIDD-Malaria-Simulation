@@ -1,4 +1,20 @@
 # ---------------------------------------------------------------
+# Eric Li MDR Paper (3/17/2020):
+# 
+# Running sim. with 30 year period (2020-2050)
+# Use first 10 years to burn-in and 20 years of data.
+# 
+# Using SINGLE location only.
+# 
+# Using transmission intensity of 0.08, 
+# initial population of 50,000, and NO seasonal info.
+# 
+# Refer to Line 893 to change drug deployment strategy.
+# 
+# 
+# ---------------------------------------------------------------
+
+# ---------------------------------------------------------------
 #
 # DATE: Sep 16 2015
 # AUTHORS: Tran Dang Nguyen and Maciej F Boni
@@ -12,10 +28,10 @@
 # starting time point of the simulation (in yyyy/m/d format) 
 # which is day 0 in the simulation
 # including the burn-in period which we normally set to 4000# days;
-starting_date: 1990/1/1
+starting_date: 2020/1/1
 
 # ending time point of the simulation (in yyyy/m/d format) 
-ending_date: 1991/1/1
+ending_date: 2050/1/1
 
 # the day at which the simulation's reporting functionality begins collecting data for 
 # EIR, # of clinical episodes, # death , # of treatment, #TF by location,...
@@ -23,7 +39,7 @@ ending_date: 1991/1/1
 start_collect_data_day: 365
 
 # the day at which the MDC will begin collecting NTF, AMU, UTL
-start_of_comparison_period: 2019/12/1
+start_of_comparison_period: 2030/12/1
 
 # number of days to keep track total number of parasites in population
 # in other words, the simulation stores 11 days of mosquitoes-biting-on-humans history
@@ -50,14 +66,14 @@ location_db:
   #id, latitude, longitude
   location_info: [
   [0, 0, 0],
-  [1, 0, 1],
-  [2, 0, 2],
-  [3, 1, 0],
-  [4, 1, 1],
-  [5, 1, 2],
-  [6, 2, 0],
-  [7, 2, 1],
-  [8, 2, 2]
+  # [1, 0, 1],
+  # [2, 0, 2],
+  # [3, 1, 0],
+  # [4, 1, 1],
+  # [5, 1, 2],
+  # [6, 2, 0],
+  # [7, 2, 1],
+  # [8, 2, 2]
   ]
   #if the number of values less than number of locations, the first value will be applied for all locations
   age_distribution_by_location: [
@@ -79,15 +95,15 @@ location_db:
 
   #transmission intensity
   #if the number of values less than number of locations, the first value will be applied for all locations
-  beta_by_location: [0.05]
+  beta_by_location: [0.08]
 
   #if the number of values less than number of locations, the first value will be applied for all locations
-  population_size_by_location: [1000, 10020, 10030, 10040, 10050, 10060, 10070, 10080, 10090 ]
+  population_size_by_location: [50000, 10020, 10030, 10040, 10050, 10060, 10070, 10080, 10090 ]
   #spatial_model could be Gravity, Barabasi, or Wesolowski
 
 # seasonality parameters for all location
 seasonal_info:
-  enable: true
+  enable: false
   a: [1]
   phi: [250]
   min_value: [0.1]
@@ -726,8 +742,13 @@ strategy_db:
     start_distribution: [[0.05, 0.95]]
     peak_distribution: [[0.8,0.2]]
     peak_after: 3650
+  # --- Eric's DHA-PPQ SFT ---
+  15:
+    name: DHAPPQ-SFTStrategy
+    type: SFT
+    therapy_id: 8
 
-initial_strategy_id: 5
+initial_strategy_id: 1 # burn-in, efficacy set to 0
 
 
 
@@ -848,89 +869,25 @@ fraction_mosquitoes_interrupted_feeding: 0.0
 inflation_factor: 0.01
 
 events:
-  - name: introduce_plas2_parasites
-    info:
-      - location: 0
-        day: 1990/3/20
-        fraction: 0.01
-
-  - name: introduce_parasites
-    info:
-      - location: 0
-        parasite_info:
-          - day: 1990/3/20
-            genotype_id: 1
-            number_of_cases: 5
-          - day: 1990/4/15
-            genotype_id: 2
-            number_of_cases: 5
-      - location: 1
-        parasite_info:
-          - day: 1990/8/25
-            genotype_id: 4
-            number_of_cases: 5
-          - day: 1990/10/20
-            genotype_id: 8
-            number_of_cases: 5
-  - name: introduce_parasites_periodically
-    info:
-      - location: 0
-        parasite_info:
-          - duration: 10
-            genotype_id: -1
-            number_of_cases: 1
-            start_day: 1990/6/2
-
-            #            # TODO: other position not listed below will be drawn uniformly
-            #            allele_distributions:
-            #              - position: 4
-            #                distribution: [1.0,0.0]
-
-            #special genotype
-
   - name: change_treatment_coverage
     info:
+      # Burn in phase, efficacy set to 0
       - type: SteadyTCM
-        day: 1990/2/1
-        p_treatment_for_less_than_5_by_location: [0.600000]
-        p_treatment_for_more_than_5_by_location: [0.550000]
-      - type: InflatedTCM
-        day: 1990/3/1
-        annual_inflation_rate: 0.01
-        #p_treatment_for_less_than_5_by_location: [0.700000]
-        #p_treatment_for_more_than_5_by_location: [0.800000]
-      - type: LinearTCM
-        from_day: 1990/6/1
-        to_day: 1990/12/1
-        #p_treatment_for_less_than_5_by_location_from: [0.600000]
-        #p_treatment_for_more_than_5_by_location_from: [0.500000]
-        p_treatment_for_less_than_5_by_location_to: [0.900000]
-        p_treatment_for_more_than_5_by_location_to: [0.90000]
+        day: 2020/1/1
+        p_treatment_for_less_than_5_by_location: [0.000000]
+        p_treatment_for_more_than_5_by_location: [0.000000]
+      
+      - type: SteadyTCM
+        day: 2030/1/1
+        p_treatment_for_less_than_5_by_location: [0.400000]
+        p_treatment_for_more_than_5_by_location: [0.400000]
+
   - name: change_treatment_strategy
     info:
-      - day: 1990/3/2
-        strategy_id: 2
-      - day: 1990/6/2
+      # 3 - Cycling, DHA-PPQ AS-AQ AL
+      # 5 - MFT, same as above
+      # 1 - AL SFT
+      # 2 - ASAQ SFT
+      # 15 - DHAPPQ SFT
+      - day: 2030/1/1
         strategy_id: 3
-      - day: 1990/9/2
-        strategy_id: 4
-  - name: single_round_MDA
-    info:
-      - day: 2020/1/1
-        fraction_population_targeted: [1.0]
-        days_to_complete_all_treatments: 14
-      - day: 2020/2/8
-        fraction_population_targeted: [0.03333333]
-        days_to_complete_all_treatments: 14
-      - day: 2020/3/14
-        fraction_population_targeted: [0.7]
-        days_to_complete_all_treatments: 14
-
-
-mda_therapy_id: 8
-
-age_bracket_prob_individual_present_at_mda: [10, 40]
-
-mean_prob_individual_present_at_mda: [0.85, 0.75, 0.85]
-
-sd_prob_individual_present_at_mda: [0.3, 0.3, 0.3]
