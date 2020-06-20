@@ -201,6 +201,9 @@ PROPERTY_REF(long, current_number_of_mutation_events)
 
   static const int number_of_reported_MOI = 8;
 
+typedef std::tuple<int, int, int> mut_pair_info;
+std::vector<mut_pair_info> MutPairInfoVector;
+
 public:
   explicit ModelDataCollector(Model* model = nullptr);
 
