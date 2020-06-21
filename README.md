@@ -8,62 +8,55 @@
 
 This version (v3.3) is developed for the Multiple-Drug-Resistant (MDR) paper. This codebase is based off Dang Nguyen Tran's v3.2 located in [this repo](https://github.com/maciekboni/PSU-CIDD-Malaria-Simulation).
 
-This version has implemented Sporozoite Challenge codes, and a modified monthly reporter to output all mutation pair information throughout the simulation.
+This version has implemented Sporozoite Challenge codes, and a modified monthly reporter to output all mutation pair information throughout the simulation. **This version only supports single-location simulations.**
 
 Under `mdr_analysis` folder, it contains several python scripts to parse output files, compute interquartile ranges for a series (default 100) of files from the same simulation settings, and create visualizations. Refer to the Jupyter Notebook `ipynb` files (named with leading numbers) to view available MDR plots.
 
 ---
 
-## Data Files
-Several tab separated values (TSV) data files are generated depending upon the reporter that is selected for use. The files listed below are based upon the `MonthlyReporter` which generates two files. File(s) are organized with group separators indicated by the sentinel value `-1111` and *n* is a zero-indexed location id.
+## Output Files Description
+One tab separated values (TSV) data file and one comma separated values (CSV) are generated if the default modified monthly reporter is selected for use. The tables listed below show you how these two files are organized, with group separators indicated by the sentinel value `-1111`.
 
-**monthly_reporter_*n*.txt** - Summary data for the model generated at the end of each simulated month.
+**monthlydata_*n*.txt** - Summary data for the model generated at the end of each simulated month.
 
-| Block | Column Number(s) | Description |
-| ---|--- | --- |
-| Summary | 1 |  Model time, number of days elapsed |
-| | 2 | Model time, calendar date as system time |
-| | 3 - 5 | Model time, calendar date (Year, Month, Day) |
-| | 6 | Seasonal factor |
-| | 7 | Treatment coverage, probability to be treated (0 - 1) |
-| | 8 | Treatment coverage, probability to be treated (0 - 10) |
-| | 9 | Population size |
-| | 10 | Group separator |
-| EIR and PfRP | 1 + (*n* * 5) | EIR by location per year |
-| | 2 + (*n* * 5) | Group separator |
-| | 3 + (*n* * 5) | Blood slide prevalence, PfPR < 5 |
-| | 4 + (*n* * 5) | Blood slide prevalence, PfPR 2 - 2 |
-| | 5 + (*n* * 5) | Blood slide prevalence, PfPr all |
-| Infections by Location | 1 | Group separator |
-| | 2 + *n* | Number of new infections by location |
-| Treatments by Location | 1 | Group separator |
-| | 2 + *n* | Number of treatments by location |
-| Clinical Episodes by Location | 1 | Group separator |
-| | 2 + *n* | Number of clinical episodes by location |
-| Genotype Frequency | 1 | Group separator |
+| Block | Column Number(s) | Description | Dataframe Header |
+| ---|--- | --- | ---|
+| Summary | 1 |  Model time, number of days elapsed | time_elapsed |
+| | 2 | Model time, calendar date as system time | system_time |
+| | 3 - 5 | Model time, calendar date (Year, Month, Day) | year / month / day |
+| | 6 | Seasonal factor | seasonal_factor |
+| | 7 | Treatment coverage, probability to be treated (0 - 1) | treatment_coverage_0_1 |
+| | 8 | Treatment coverage, probability to be treated (0 - 10) | treatment_coverage_0_10 |
+| | 9 | Population size | population |
+| | 10 | Group separator | sep |
+| EIR and PfPR | 11 | EIR by location per year | eir |
+| | 12 | Group separator | sep |
+| | 13 | Blood slide prevalence, PfPR (age 2-10) | bsp_2_10 |
+| | 14 | Blood slide prevalence, PfPR (age<5) | bsp_0_5 |
+| | 15 | Blood slide prevalence, PfPR all | blood_slide_prevalence |
+| | 16 | Group separator                                        | sep                      |
+| Infections by Location        | 17               | Monthly Number of new infections                       | monthly_new_infection    |
+|                               | 18               | Group separator                                        | sep                      |
+| Treatments by Location        | 19               | Monthly Number of treatments                           | monthly_new_treatment |
+|                               | 20               | Group separator                                        | sep                      |
+| Clinical Episodes by Location | 21               | Monthly Number of Clinical Episodes                    | monthly_clinical_episode |
+|                               | 22               | Group separator                                        | sep                      |
+| Genotype Frequency | 23-150 | Each Genotype's Current Frequency | *{each genotype's encoding}* |
+|  | ... | See genotype frequency discussion |  |
 
+**mutpair_*n*.txt** - Information about all the mutations occurred throughout the simulation.
 
-**summary_reporter_*n*.txt** Summary that is generated after the model has completed execution.
-
-| Block | Column Number(s) | Description |
+| Column Number(s) | Description | Dataframe Header |
 | --- | --- | --- |
-| Summary I | 1 | Random seed value |
-|  | 2 | Number of locations |
-|  | 3 | *Beta* value |
-|  | 4 | Population size |
-| EIR and PfRP | 1 + (*n* * 5) | EIR by location per year |
-| | 2 + (*n* * 5) | Group separator |
-| | 3 + (*n* * 5) | Blood slide prevalence, PfPR < 5 |
-| | 4 + (*n* * 5) | Blood slide prevalence, PfPR 2 - 2 |
-| | 5 + (*n* * 5) | Blood slide prevalence, PfPr all |
-| Summary II | 1 | Treatment strategy id |
-| | 2 | Percent treatment failures per year |
-
-
+| 1 | Model time, number of days elapsed | time |
+| 2 | Genotype Number muted from | from |
+| 3 | Genotype Number muted to | to |
 
 ---
 
 ## Genotype Information
+
+To view a complete list of all the genotypes (their encoding and number) and how effective they can be killed by a certain drug, use this [csv file](https://github.com/lizhewen/PSU-CIDD-Malaria-Simulation/blob/v3.3_MDR_Eric/mdr_analysis/ef2020.txt).
 
 Genotypes are encoded into the application via the input file which contains a YAML entry for `genotype_info`. This structure is organized as `loci` with the assoicated `alleles` that may be mutated during model execution. The following table outlines loci and alleles that are included in the sample configuration file.
 
@@ -96,9 +89,10 @@ Indicates that the parasite has the K76 allele from the pfcrt locus (K), N86 Y18
 
 ---
 
-## About
+## About *mdr_analysis* Folder
 
 ---
 
-## Documentation
+## Contact
 
+To contact us, please visit our [lab's website](http://mol.ax/).
