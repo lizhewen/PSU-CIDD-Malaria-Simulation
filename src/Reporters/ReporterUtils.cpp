@@ -175,18 +175,6 @@ void ReporterUtils::output_genotype_frequency3(std::stringstream &ss, const int 
       ss << i << sep;
     }
   }
-
-  //this is for all locations
-  ss << group_sep;
-  for (auto &i : result3_all) {
-    i /= sum1_all;
-  }
-  for (auto &i : result3_all) {
-    ss << i << sep;
-  }
-
-  ss << group_sep;
-  ss << sum1_all << sep;
 }
 
 void ReporterUtils::output_3_genotype_frequency(std::stringstream &ss, const int &number_of_genotypes,
