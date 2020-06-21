@@ -8,5 +8,6 @@
 #PBS -M lizweric@gmail.com
 
 cd ${PBS_O_WORKDIR}
+mkdir -p ../mdr_output
 ../build/bin/MaSim -c ${input_files} -o ${output_files}
 exit
