@@ -19,7 +19,7 @@ One tab separated values (TSV) data file and one comma separated values (CSV) ar
 
 **monthlydata_*n*.txt** - Summary data for the model generated at the end of each simulated month.
 
-| Block | Column Number(s) | Description | Dataframe Header |
+| Block | Column Number | Description | Dataframe Header |
 | ---|--- | --- | ---|
 | Summary | 1 |  Model time, number of days elapsed | time_elapsed |
 | | 2 | Model time, calendar date as system time | system_time |

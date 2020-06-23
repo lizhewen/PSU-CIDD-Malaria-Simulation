@@ -17,3 +17,9 @@ documentation/MaSim.uml~
 
 # Ingore the "default" output directory
 out
+
+# Ignore stdout and stderr files on cluster
+mdr_cluster_script/*.e*
+mdr_cluster_script/*.o*
+
+mdr_output/
