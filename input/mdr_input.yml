@@ -833,8 +833,7 @@ external_population_circulation_information:
     min_value: 0.1
 
 # free recombination among the drug resistance loci
-#using_free_recombination: true
-using_free_recombination: false
+using_free_recombination: true
 
 # the current treatment failure rate as observed in the population is not really
 # today's treatment failure rate, as these data are never assembled that quickly in
