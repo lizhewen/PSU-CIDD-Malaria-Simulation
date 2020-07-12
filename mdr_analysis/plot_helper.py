@@ -45,45 +45,43 @@ def IQR_compute(rawfilepattern, parsedatapattern, settherapyinfo):
     allgenodf[129] = allgenodf[129].append(df['blood_slide_prevalence'], ignore_index=True)
     allgenodf[130] = allgenodf[130].append(df['monthly_ntf_raw'], ignore_index=True)
   
-  L_IQRdf = pd.DataFrame(columns = ['time_elapsed', 'population' 'blood_slide_prevalence', 'monthly_ntf_raw'] + ENCODINGDB)
-  M_IQRdf = pd.DataFrame(columns = ['time_elapsed', 'population' 'blood_slide_prevalence', 'monthly_ntf_raw'] + ENCODINGDB)
-  U_IQRdf = pd.DataFrame(columns = ['time_elapsed', 'population' 'blood_slide_prevalence', 'monthly_ntf_raw'] + ENCODINGDB)
+  L_IQRdf = pd.DataFrame(columns = ['time_elapsed', 'population', 'blood_slide_prevalence', 'monthly_ntf_raw', 'ntf_percent'] + ENCODINGDB)
+  M_IQRdf = pd.DataFrame(columns = ['time_elapsed', 'population', 'blood_slide_prevalence', 'monthly_ntf_raw', 'ntf_percent'] + ENCODINGDB)
+  U_IQRdf = pd.DataFrame(columns = ['time_elapsed', 'population', 'blood_slide_prevalence', 'monthly_ntf_raw', 'ntf_percent'] + ENCODINGDB)
 
   # Recombine population IQR results to three dfs
-  population_IQR_result = allgenodf[128].quantile([.25, .5, .75]).values.tolist()
+  population_IQR_result = allgenodf[128].astype('float').quantile([.25, .5, .75]).values.tolist()
   L_IQRdf['population'] = population_IQR_result[0]
   M_IQRdf['population'] = population_IQR_result[1]
   U_IQRdf['population'] = population_IQR_result[2]
 
   # Recombine bsp IQR results to three dfs
-  bsp_IQR_result = allgenodf[129].quantile([.25, .5, .75]).values.tolist()
+  bsp_IQR_result = allgenodf[129].astype('float').quantile([.25, .5, .75]).values.tolist()
   L_IQRdf['blood_slide_prevalence'] = bsp_IQR_result[0]
   M_IQRdf['blood_slide_prevalence'] = bsp_IQR_result[1]
   U_IQRdf['blood_slide_prevalence'] = bsp_IQR_result[2]
 
   # Recombine NTF IQR results to three dfs
-  ntf_IQR_result = allgenodf[130].quantile([.25, .5, .75]).values.tolist()
+  ntf_IQR_result = allgenodf[130].astype('float').quantile([.25, .5, .75]).values.tolist()
   L_IQRdf['monthly_ntf_raw'] = ntf_IQR_result[0]
   M_IQRdf['monthly_ntf_raw'] = ntf_IQR_result[1]
   U_IQRdf['monthly_ntf_raw'] = ntf_IQR_result[2]
 
   # Recombine genotype freq IQR results to three dfs
   for k in range(128):
-    temp_IQR_result = allgenodf[k].quantile([.25, .5, .75]).values.tolist()
-    # can't compute IQR for all 0's
-    if len(temp_IQR_result[0]) == 0:
-      L_IQRdf[ENCODINGDB[k]] = [0] * 361
-      M_IQRdf[ENCODINGDB[k]] = [0] * 361
-      U_IQRdf[ENCODINGDB[k]] = [0] * 361
-    else:
-      L_IQRdf[ENCODINGDB[k]] = temp_IQR_result[0]
-      M_IQRdf[ENCODINGDB[k]] = temp_IQR_result[1]
-      U_IQRdf[ENCODINGDB[k]] = temp_IQR_result[2]
+    temp_IQR_result = allgenodf[k].astype('float').quantile([.25, .5, .75]).values.tolist()
+    L_IQRdf[ENCODINGDB[k]] = temp_IQR_result[0]
+    M_IQRdf[ENCODINGDB[k]] = temp_IQR_result[1]
+    U_IQRdf[ENCODINGDB[k]] = temp_IQR_result[2]
 
   L_IQRdf['time_elapsed'] = REPORTDAYS
   M_IQRdf['time_elapsed'] = REPORTDAYS
   U_IQRdf['time_elapsed'] = REPORTDAYS
-  
+
+  L_IQRdf['ntf_percent'] = L_IQRdf['monthly_ntf_raw'] / L_IQRdf['population'] * 100
+  M_IQRdf['ntf_percent'] = M_IQRdf['monthly_ntf_raw'] / M_IQRdf['population'] * 100
+  U_IQRdf['ntf_percent'] = U_IQRdf['monthly_ntf_raw'] / U_IQRdf['population'] * 100
+
   L_IQRdf.to_csv('IQR_data/%s_L.csv' % settherapyinfo, index=False)
   M_IQRdf.to_csv('IQR_data/%s_M.csv' % settherapyinfo, index=False)
   U_IQRdf.to_csv('IQR_data/%s_U.csv' % settherapyinfo, index=False)
