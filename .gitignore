@@ -23,3 +23,6 @@ mdr_cluster_script/*.e*
 mdr_cluster_script/*.o*
 
 mdr_output/
+mdr_analysis/raw_data/
+mdr_analysis/__pycache__/
+mdr_analysis/.ipynb_checkpoints
