@@ -41,7 +41,9 @@ One tab separated values (TSV) data file and one comma separated values (CSV) ar
 |                               | 20               | Group separator                                        | sep                      |
 | Clinical Episodes by Location | 21               | Monthly Number of Clinical Episodes                    | monthly_clinical_episode |
 |                               | 22               | Group separator                                        | sep                      |
-| Genotype Frequency | 23-150 | Each Genotype's Current Frequency | *{each genotype's encoding}* |
+| Number of Treatment Failures | 23 | Monthly Number of Treatment Failures (Raw, not discounted) | monthly_ntf_raw |
+| | 24 | Group separator | sep |
+| Genotype Frequency | 25-152 | Each Genotype's Current Frequency | *{each genotype's encoding}* |
 |  | ... | See genotype frequency discussion |  |
 
 **mutpair_*n*.txt** - Information about all the mutations occurred throughout the simulation.
