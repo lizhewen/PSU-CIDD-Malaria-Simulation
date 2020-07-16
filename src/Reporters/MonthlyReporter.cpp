@@ -82,8 +82,35 @@ void MonthlyReporter::monthly_report()
 
 void MonthlyReporter::after_run()
 {
+  // Summary Data File
   ss.str("");
-  // Output All Mutation Pair Info
+  ss << Model::RANDOM->seed() << sep << Model::CONFIG->number_of_locations() << sep;
+  ss << Model::CONFIG->location_db()[0].beta << sep;
+  ss << Model::CONFIG->location_db()[0].population_size << sep;
+  print_EIR_PfPR_by_location();
+
+  ss << group_sep;
+  //output last strategy information
+  ss << Model::TREATMENT_STRATEGY->id << sep;
+
+  //output NTF
+  const auto total_time_in_years = (Model::SCHEDULER->current_time() - Model::CONFIG->start_of_comparison_period()) /
+    static_cast<double>(Constants::DAYS_IN_YEAR());
+
+  auto sum_ntf = 0.0;
+  ul pop_size = 0;
+  for (auto location = 0; location < Model::CONFIG->number_of_locations(); location++)
+  {
+    sum_ntf += Model::DATA_COLLECTOR->cumulative_NTF_by_location()[location];
+    pop_size += Model::DATA_COLLECTOR->popsize_by_location()[location];
+  }
+
+  ss << (sum_ntf * 100 / pop_size) / total_time_in_years << sep;
+
+  CLOG(INFO, "summary_reporter") << ss.str();
+  ss.str("");
+
+  // All Mutation Pair Data
   for (int i = 0; i < Model::DATA_COLLECTOR->MutPairInfoVector.size(); i++) {
     // time
     ss << std::get<0>(Model::DATA_COLLECTOR->MutPairInfoVector[i]) << ',';
