@@ -68,6 +68,23 @@ void config_logger() {
   // default logger uses default configurations
   el::Loggers::reconfigureLogger("monthly_reporter", monthly_reporter_logger);
 
+  el::Configurations summary_reporter_logger;
+  summary_reporter_logger.setToDefault();
+  summary_reporter_logger.set(el::Level::Debug, el::ConfigurationType::Format, OUTPUT_FORMAT);
+  summary_reporter_logger.set(el::Level::Error, el::ConfigurationType::Format, OUTPUT_FORMAT);
+  summary_reporter_logger.set(el::Level::Fatal, el::ConfigurationType::Format, OUTPUT_FORMAT);
+  summary_reporter_logger.set(el::Level::Trace, el::ConfigurationType::Format, OUTPUT_FORMAT);
+  summary_reporter_logger.set(el::Level::Info, el::ConfigurationType::Format, "%msg");
+  summary_reporter_logger.set(el::Level::Warning, el::ConfigurationType::Format, "[%level] [%logger] %msg");
+  summary_reporter_logger.set(el::Level::Verbose, el::ConfigurationType::Format, "[%level-%vlevel] [%logger] %msg");
+
+  summary_reporter_logger.setGlobally(el::ConfigurationType::ToFile, "true");
+  summary_reporter_logger.setGlobally(el::ConfigurationType::Filename, fmt::format("{}summary_{}.txt", path, job_number));
+  summary_reporter_logger.setGlobally(el::ConfigurationType::ToStandardOutput, "false");
+  summary_reporter_logger.setGlobally(el::ConfigurationType::LogFlushThreshold, "100");
+  // default logger uses default configurations
+  el::Loggers::reconfigureLogger("summary_reporter", summary_reporter_logger);
+
   el::Configurations mutpair_reporter_logger;
   mutpair_reporter_logger.setToDefault();
   mutpair_reporter_logger.set(el::Level::Debug, el::ConfigurationType::Format, OUTPUT_FORMAT);
