@@ -15,9 +15,9 @@ Under `mdr_analysis` folder, it contains several python scripts to parse output 
 ---
 
 ## Output Files Description
-One tab separated values (TSV) data file and one comma separated values (CSV) are generated if the default modified monthly reporter is selected for use. The tables listed below show you how these two files are organized, with group separators indicated by the sentinel value `-1111`.
+Two tab separated values (TSV) data files and one comma separated values (CSV) are generated if the default modified monthly reporter is selected for use. The tables listed below show you how these two files are organized, with group separators indicated by the sentinel value `-1111`.
 
-**monthlydata_*n*.txt** - Summary data for the model generated at the end of each simulated month.
+**monthly_*n*.txt** - Summary data for the model generated at the end of each simulated month.
 
 | Block | Column Number | Description | Dataframe Header |
 | ---|--- | --- | ---|
@@ -45,6 +45,23 @@ One tab separated values (TSV) data file and one comma separated values (CSV) ar
 | | 24 | Group separator | sep |
 | Genotype Frequency | 25-152 | Each Genotype's Current Frequency | *{each genotype's encoding}* |
 |  | ... | See genotype frequency discussion |  |
+
+**summary_*n*.txt** - Summary that is generated after the model has completed execution.
+
+| Block        | Column Number(s) | Description                                    |
+| ------------ | ---------------- | ---------------------------------------------- |
+| Summary I    | 1                | Random seed value                              |
+|              | 2                | Number of locations                            |
+|              | 3                | *Beta* value                                   |
+|              | 4                | Population size                                |
+| EIR and PfPR | 5                | EIR by location per year                       |
+|              | 6                | Group separator                                |
+|              | 7                | Blood slide prevalence, PfPR (age 2-10)        |
+|              | 8                | Blood slide prevalence, PfPR (age<5)           |
+|              | 9                | Blood slide prevalence, PfPR all               |
+|              | 10               | Group separator                                |
+| Summary II   | 11               | Treatment strategy id                          |
+|              | 12               | Cumulative percent treatment failures per year |
 
 **mutpair_*n*.txt** - Information about all the mutations occurred throughout the simulation.
 
@@ -92,6 +109,8 @@ Indicates that the parasite has the K76 allele from the pfcrt locus (K), N86 Y18
 ---
 
 ## About *mdr_analysis* Folder
+
+This folder contains codes on the detailed analysis of Multiple-Firstline-Therapy and its performance (regarding treatment outcome measures) compared with other drug deployment strategies. To read more about these codes, use [this specific readme](mdr_analysis/README.md).
 
 ---
 
