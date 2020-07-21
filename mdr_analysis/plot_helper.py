@@ -1,4 +1,5 @@
 import os
+import statistics
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
@@ -86,6 +87,14 @@ def IQR_compute(rawfilepattern, parsedatapattern, settherapyinfo):
   L_IQRdf.to_csv('IQR_data/%s_L.csv' % settherapyinfo, index=False)
   M_IQRdf.to_csv('IQR_data/%s_M.csv' % settherapyinfo, index=False)
   U_IQRdf.to_csv('IQR_data/%s_U.csv' % settherapyinfo, index=False)
+
+def NTF_IQR_compute(rawfilepattern):
+  ntf_list = []
+  for j in range(1,101):
+    file_name = rawfilepattern % j
+    df = pd.read_csv(file_name, index_col=False, header=None, sep='\t')
+    ntf_list.append(float(df.iloc[0,11]))
+  return statistics.median(ntf_list)
 
 def resistant_strength_calc(pattern, drugname, option=1):
   # Drug Resistant Strength Calculation Function

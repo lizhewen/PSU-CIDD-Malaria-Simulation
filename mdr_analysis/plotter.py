@@ -34,7 +34,7 @@ def fig1_plot_ten_vars(ax, dflist, drug):
       df = df_col_replace(df, drug, option=1)
       ax.plot(df['time_elapsed'], df['2-4'], color='k')
 
-def fig2_dangerous_triple(ax, df_l, df_m, df_u, pattern, annoty=None):
+def fig2_dangerous_triple(ax, df_l, df_m, df_u, pattern, annoty=None, ntf=None):
   # iloc gives data after burn-in only
   df_l = df_l.iloc[FIRST_ROW_AFTER_BURNIN:]
   df_m = df_m.iloc[FIRST_ROW_AFTER_BURNIN:]
@@ -73,6 +73,9 @@ def fig2_dangerous_triple(ax, df_l, df_m, df_u, pattern, annoty=None):
     annotation_string += r"$T_{.01}$ = %s" % t_01
     annotation_string += "\n"
     annotation_string += "AUC = %s" % auc
+    if ntf is not None:
+      annotation_string += "\n"
+      annotation_string += "NTF = %s%%" % ntf
     ax.text(ANNOTATION_X_LOCATION, annoty*0.65, annotation_string)
 
 def fig2_double_and_higher(ax, df_l, df_m, df_u, drug, annoty=None):
