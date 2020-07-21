@@ -43,8 +43,12 @@ Two tab separated values (TSV) data files and one comma separated values (CSV) a
 |                               | 22               | Group separator                                        | sep                      |
 | Number of Treatment Failures | 23 | Monthly Number of Treatment Failures (Raw, not discounted) | monthly_ntf_raw |
 | | 24 | Group separator | sep |
-| Genotype Frequency | 25-152 | Each Genotype's Current Frequency | *{each genotype's encoding}* |
+| Genotype Frequency | 25-152 | Each Genotype's Current Frequency **by Genotype by Location** | *{each genotype's encoding}* |
 |  | ... | See genotype frequency discussion |  |
+| Total Genotype Frequency | 153 | Group separator | sep |
+|  | 154-281 | Total Genotype's Current Frequency by Genotype across All Locations (same as 25-152 in MDR) | *{each genotype's encoding} (not in computed IQR files)* |
+|  | 282 | Group separator | sep |
+|  | 283 | Total Genotype's Current Frequency **across Genotypes across All Locations** | total_count |
 
 **summary_*n*.txt** - Summary that is generated after the model has completed execution.
 
