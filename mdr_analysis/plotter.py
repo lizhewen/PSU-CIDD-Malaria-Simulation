@@ -27,12 +27,12 @@ def fig1_plot_ten_vars(ax, dflist, drug):
   if drug == 'DHA-PPQ':
     for df in dflist:
       df = df_col_replace(df, drug, option=1)
-      ax.plot(df['time_elapsed'], df['2-2'], color='#F88379')
+      ax.plot(df['time_elapsed'], df['2-2'], color='#F88379', alpha=0.1)
   # Highest is 2-4 for ASAQ & AL
   else:
     for df in dflist:
       df = df_col_replace(df, drug, option=1)
-      ax.plot(df['time_elapsed'], df['2-4'], color='k')
+      ax.plot(df['time_elapsed'], df['2-4'], color='k', alpha=0.1)
 
 def fig2_dangerous_triple(ax, df_l, df_m, df_u, pattern, annoty=None, ntf=None):
   # iloc gives data after burn-in only
