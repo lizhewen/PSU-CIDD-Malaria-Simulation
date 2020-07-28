@@ -2,8 +2,9 @@
 # Eric Li MDR Paper:
 #
 # Update 6/19/2020, with same settings as MMC.
+# Update 7/27/2020, with new start date and mutation probability.
 # 
-# Running sim. with 30 year period (2020-2050)
+# Running sim. with 30 year period (2010-2040). Burn-in ends at 2020.
 # Use first 10 years to burn-in and 20 years of data.
 # Burn-in with 50% coverage and an 80% efficacy drug.
 # 
@@ -22,10 +23,10 @@
 # starting time point of the simulation (in yyyy/m/d format) 
 # which is day 0 in the simulation
 # including the burn-in period which we normally set to 4000# days;
-starting_date: 2020/1/1
+starting_date: 2010/1/1
 
 # ending time point of the simulation (in yyyy/m/d format) 
-ending_date: 2050/1/1
+ending_date: 2040/1/1
 
 # the day at which the simulation's reporting functionality begins collecting data for 
 # EIR, # of clinical episodes, # death , # of treatment, #TF by location,...
@@ -33,7 +34,7 @@ ending_date: 2050/1/1
 start_collect_data_day: 365
 
 # the day at which the MDC will begin collecting NTF, AMU, UTL
-start_of_comparison_period: 2030/1/1
+start_of_comparison_period: 2020/1/1
 
 # number of days to keep track total number of parasites in population
 # in other words, the simulation stores 11 days of mosquitoes-biting-on-humans history
@@ -350,7 +351,7 @@ drug_db:
     maximum_parasite_killing_rate: 0.999
     n: 25
     age_specific_drug_concentration_sd: [0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4]
-    mutation_probability: 0.005
+    mutation_probability: 0.001983
     affecting_loci: [2]
     selecting_alleles: [[1]]
     k: 4
@@ -363,7 +364,7 @@ drug_db:
     maximum_parasite_killing_rate: 0.99
     n: 20
     age_specific_drug_concentration_sd: [0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4]
-    mutation_probability: 0.005
+    mutation_probability: 0.001983
     affecting_loci: [0,1]
     selecting_alleles: [[0],[0,2,3,4,6,7]]
     k: 4
@@ -406,7 +407,7 @@ drug_db:
     maximum_parasite_killing_rate: 0.95
     n: 19
     age_specific_drug_concentration_sd: [0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4]
-    mutation_probability: 0.005
+    mutation_probability: 0.001983
     affecting_loci: [0,1]
     selecting_alleles: [[1],[0,1,3,4,5,7]]
     k: 4
@@ -449,7 +450,7 @@ drug_db:
     maximum_parasite_killing_rate: 0.9
     n: 15
     age_specific_drug_concentration_sd: [0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4]
-    mutation_probability: 0.005
+    mutation_probability: 0.001983
     affecting_loci: [3]
     selecting_alleles: [[1]]
     resistant_factor: [[1]]
@@ -464,7 +465,7 @@ drug_db:
     maximum_parasite_killing_rate: 0.9
     n: 15
     age_specific_drug_concentration_sd: [0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4]
-    mutation_probability: 0.005
+    mutation_probability: 0.001983
     affecting_loci: [1]
     selecting_alleles: [[4,5,6,7]]
     k: 4
@@ -495,7 +496,7 @@ drug_db:
     maximum_parasite_killing_rate: 0.95
     n: 19
     age_specific_drug_concentration_sd: [0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4]
-    mutation_probability: 0.005
+    mutation_probability: 0.001983
     affecting_loci: [0,1]
     selecting_alleles: [[1],[1,3,5,7]]
     k: 4
@@ -856,7 +857,7 @@ events:
   - name: change_treatment_coverage
     info:
       - type: SteadyTCM
-        day: 2030/1/1
+        day: 2020/1/1
         p_treatment_for_less_than_5_by_location: [0.400000]
         p_treatment_for_more_than_5_by_location: [0.400000]
   - name: change_treatment_strategy
@@ -865,6 +866,6 @@ events:
       # 5 - MFT, same as above
       # 4 - Adaptive Cycling, with 12-month delay
       #     Line 642 to change delay
-      - day: 2030/1/1
+      - day: 2020/1/1
         strategy_id: 4
 

@@ -27,4 +27,4 @@ mdr_analysis/raw_data/
 mdr_analysis/__pycache__/
 mdr_analysis/.ipynb_checkpoints
 mdr_analysis/generated_figures
-mdr_analysis/*-Copy1.ipynb
+mdr_analysis/*-Copy*.ipynb
