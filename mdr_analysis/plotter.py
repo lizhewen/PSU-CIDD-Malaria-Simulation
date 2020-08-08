@@ -9,8 +9,11 @@ ANNOTATION_X_LOCATION = 3833
 
 def fig1_plot_IQR(ax, df_l, df_m, df_u, drug, annoty=None):
   df = df_col_replace(df_m, drug, option=1)
+  df = df.iloc[FIRST_ROW_AFTER_BURNIN:]
   df_nl = df_col_replace(df_l, drug, option=1)
+  df_nl = df_nl.iloc[FIRST_ROW_AFTER_BURNIN:]
   df_nu = df_col_replace(df_u, drug, option=1)
+  df_nu = df_nu.iloc[FIRST_ROW_AFTER_BURNIN:]
   col_names = list(df.columns)
   mdr_cases = col_names[:-5] # Last five columns are not about MDR
   mdr_cases.reverse() # reverse to plot most-dangerous type latest
@@ -22,29 +25,37 @@ def fig1_plot_IQR(ax, df_l, df_m, df_u, drug, annoty=None):
     ax.fill_between(df_m['time_elapsed'], df_nl[mdr_case], df_nu[mdr_case], 
                       color=color, alpha=0.25)
 
-def fig1_plot_ten_vars(ax, dflist, drug):
+def fig1_plot_vars(ax, dflist, drug):
   # Highest is 2-2 for DHA-PPQ
   if drug == 'DHA-PPQ':
     for df in dflist:
       df = df_col_replace(df, drug, option=1)
+      df = df.iloc[FIRST_ROW_AFTER_BURNIN:]
       ax.plot(df['time_elapsed'], df['2-2'], color='#F88379', alpha=0.1)
   # Highest is 2-4 for ASAQ & AL
   else:
     for df in dflist:
       df = df_col_replace(df, drug, option=1)
+      df = df.iloc[FIRST_ROW_AFTER_BURNIN:]
       ax.plot(df['time_elapsed'], df['2-4'], color='k', alpha=0.1)
 
-def fig2_dangerous_triple(ax, df_l, df_m, df_u, pattern, annoty=None, ntf=None):
+def fig2_dangerous_triple(ax, df_l, df_m, df_u, df_ll, df_uu, pattern, annoty=None, ntf=None):
   # iloc gives data after burn-in only
+  df_ll = df_ll.iloc[FIRST_ROW_AFTER_BURNIN:]
   df_l = df_l.iloc[FIRST_ROW_AFTER_BURNIN:]
   df_m = df_m.iloc[FIRST_ROW_AFTER_BURNIN:]
   df_u = df_u.iloc[FIRST_ROW_AFTER_BURNIN:]
+  df_uu = df_uu.iloc[FIRST_ROW_AFTER_BURNIN:]
   ax.plot(df_m['time_elapsed'], df_m.filter(regex=pattern, axis=1).\
             sum(axis=1), color='#800080')
   ax.fill_between(df_m['time_elapsed'], 
                             df_l.filter(regex=pattern, axis=1).sum(axis=1), 
                             df_u.filter(regex=pattern, axis=1).sum(axis=1), 
                             color='#800080', alpha=0.25)
+  ax.fill_between(df_m['time_elapsed'], 
+                            df_ll.filter(regex=pattern, axis=1).sum(axis=1), 
+                            df_uu.filter(regex=pattern, axis=1).sum(axis=1), 
+                            color='#800080', alpha=0.1)
   if annoty is not None:
     # for most_dange_trip type 1 
     # calculate genotype freq at last day
@@ -74,19 +85,24 @@ def fig2_dangerous_triple(ax, df_l, df_m, df_u, pattern, annoty=None, ntf=None):
     annotation_string += "\n"
     annotation_string += "AUC = %s" % auc
     if ntf is not None:
+      ntf = round(ntf, 1)
       annotation_string += "\n"
-      annotation_string += "NTF = %s%%" % ntf
+      annotation_string += "NTF = %s" % ntf
     ax.text(ANNOTATION_X_LOCATION, annoty*0.65, annotation_string)
 
-def fig2_double_and_higher(ax, df_l, df_m, df_u, drug, annoty=None):
+def fig2_double_and_higher(ax, df_l, df_m, df_u, df_ll, df_uu, drug, annoty=None):
   option = 1
   
+  df_ll = df_col_replace(df_ll, drug, option)
+  df_ll = df_ll.iloc[FIRST_ROW_AFTER_BURNIN:]
   df_l = df_col_replace(df_l, drug, option)
   df_l = df_l.iloc[FIRST_ROW_AFTER_BURNIN:]
   df_m = df_col_replace(df_m, drug, option)
   df_m = df_m.iloc[FIRST_ROW_AFTER_BURNIN:]
   df_u = df_col_replace(df_u, drug, option)
   df_u = df_u.iloc[FIRST_ROW_AFTER_BURNIN:]
+  df_uu = df_col_replace(df_uu, drug, option)
+  df_uu = df_uu.iloc[FIRST_ROW_AFTER_BURNIN:]
 
   col_names = list(df_m.columns)
   mdr_cases = col_names[:-5] # Last five columns are not about MDR
@@ -98,6 +114,8 @@ def fig2_double_and_higher(ax, df_l, df_m, df_u, drug, annoty=None):
                       color=color)
       ax.fill_between(df_m['time_elapsed'], df_l[mdr_case], df_u[mdr_case], 
                       color=color, alpha=0.25)
+      ax.fill_between(df_m['time_elapsed'], df_ll[mdr_case], df_uu[mdr_case], 
+                      color=color, alpha=0.1)
 
   if annoty is not None:
     # get the most dangerous double type for annotation
