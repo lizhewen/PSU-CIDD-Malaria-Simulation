@@ -8,8 +8,8 @@ FIRST_ROW_AFTER_BURNIN = 120
 ANNOTATION_X_LOCATION = 3833
 
 def fig1_plot_IQR(ax, df_l, df_m, df_u, drug, annoty=None):
+  df_m = df_m.iloc[FIRST_ROW_AFTER_BURNIN:]
   df = df_col_replace(df_m, drug, option=1)
-  df = df.iloc[FIRST_ROW_AFTER_BURNIN:]
   df_nl = df_col_replace(df_l, drug, option=1)
   df_nl = df_nl.iloc[FIRST_ROW_AFTER_BURNIN:]
   df_nu = df_col_replace(df_u, drug, option=1)
@@ -23,7 +23,7 @@ def fig1_plot_IQR(ax, df_l, df_m, df_u, drug, annoty=None):
     ax.plot(df['time_elapsed'], df[mdr_case], 
             color=color)
     ax.fill_between(df_m['time_elapsed'], df_nl[mdr_case], df_nu[mdr_case], 
-                      color=color, alpha=0.25)
+                    color=color, alpha=0.25)
 
 def fig1_plot_vars(ax, dflist, drug):
   # Highest is 2-2 for DHA-PPQ
