@@ -1,6 +1,7 @@
 import os
-import statistics
+#import statistics
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 from constant import HEADLINE, ENCODINGDB, REPORTDAYS
@@ -110,7 +111,18 @@ def NTF_IQR_compute(rawfilepattern):
     file_name = rawfilepattern % j
     df = pd.read_csv(file_name, index_col=False, header=None, sep='\t')
     ntf_list.append(float(df.iloc[0,11]))
-  return statistics.median(ntf_list)
+  Ql = np.percentile(ntf_list, 5, interpolation = 'midpoint')
+  Ql = round(Ql, 1)
+  Q1 = np.percentile(ntf_list, 25, interpolation = 'midpoint')
+  Q1 = round(Q1, 1)
+  M = np.percentile(ntf_list, 50, interpolation = 'midpoint')
+  M = round(M, 1)
+  Q3 = np.percentile(ntf_list, 75, interpolation = 'midpoint')
+  Q3 = round(Q3, 1)
+  Qu = np.percentile(ntf_list, 75, interpolation = 'midpoint')
+  Qu = round(Qu, 1)
+  #return statistics.median(ntf_list)
+  return "%s (%s-%s, %s-%s)" % (M, Q1, Q3, Ql, Qu)
 
 def resistant_strength_calc(pattern, drugname, option=1):
   # Drug Resistant Strength Calculation Function

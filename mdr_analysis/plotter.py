@@ -56,21 +56,31 @@ def fig2_dangerous_triple(ax, df_l, df_m, df_u, df_ll, df_uu, pattern, annoty=No
                             df_ll.filter(regex=pattern, axis=1).sum(axis=1), 
                             df_uu.filter(regex=pattern, axis=1).sum(axis=1), 
                             color='#800080', alpha=0.1)
+  
+  # Mark where it exceeds the 10%
+  try:      
+    frn_tenp = df_m[df_m.filter(regex=pattern, axis=1).sum(axis=1).\
+                gt(0.1)].index[0]
+    ax.plot(df_m.loc[frn_tenp, 'time_elapsed'], 
+            df_m.loc[frn_tenp].filter(regex=pattern).sum(), 'o', color='k')
+  except:
+    pass # Do not annotate if not reached
+
+  try:
+    # First Row Number that exceeds 1%
+    frn = df_m[df_m.filter(regex=pattern, axis=1).sum(axis=1).\
+                gt(0.01)].index[0]
+    t_01 = df_m.loc[frn, 'time_elapsed']
+    # Mark where it reaches 1% with dot
+    ax.plot(t_01, df_m.loc[frn].filter(regex=pattern).sum(), 'o', color='k')
+    t_01 = round(t_01/365-10, 1)
+  except IndexError:
+    t_01 = 'N/A'
+
   if annoty is not None:
     # for most_dange_trip type 1 
     # calculate genotype freq at last day
     x_20 = df_m.filter(regex=pattern, axis=1).sum(axis=1).tail(1).values[0]
-    # calculate time until it's 1% of total genotype freq
-    # Get first row # that's bigger than threshold
-    threshold = 0.01
-    try:
-      # First Row Number that exceeds the threshold
-      frn = df_m[df_m.filter(regex=pattern, axis=1).sum(axis=1).\
-                  gt(threshold)].index[0]
-      t_01 = df_m.loc[frn, 'time_elapsed']
-      t_01 = round(t_01/365-10, 1)
-    except IndexError:
-      t_01 = 'N/A'
     # calculate area under median curve
     yaxis = df_m.filter(regex=pattern, axis=1).sum(axis=1).values
     xaxis = df_m['time_elapsed'].values
@@ -85,7 +95,6 @@ def fig2_dangerous_triple(ax, df_l, df_m, df_u, df_ll, df_uu, pattern, annoty=No
     annotation_string += "\n"
     annotation_string += "AUC = %s" % auc
     if ntf is not None:
-      ntf = round(ntf, 1)
       annotation_string += "\n"
       annotation_string += "NTF = %s" % ntf
     ax.text(ANNOTATION_X_LOCATION, annoty*0.65, annotation_string)
@@ -117,21 +126,30 @@ def fig2_double_and_higher(ax, df_l, df_m, df_u, df_ll, df_uu, drug, annoty=None
       ax.fill_between(df_m['time_elapsed'], df_ll[mdr_case], df_uu[mdr_case], 
                       color=color, alpha=0.1)
 
-  if annoty is not None:
-    # get the most dangerous double type for annotation
-    most_dang_type = mdr_cases[-1]
+  # get the most dangerous double type for annotation
+  most_dang_type = mdr_cases[-1]
+  # Mark where it exceeds the 10%
+  try:      
+    frn_tenp = df_m[df_m[most_dang_type].gt(0.1)].index[0]
+    ax.plot(df_m.loc[frn_tenp, 'time_elapsed'], 
+            df_m.loc[frn_tenp, most_dang_type], 'o', color='k')
+  except:
+    pass # Do not annotate if not reached
+
+  try:
+    # First Row Number that exceeds 1%
+    frn = df_m[df_m[most_dang_type].gt(0.01)].index[0]
+    t_01 = df_m.loc[frn, 'time_elapsed']
+    # Mark where it reaches 1% with dot
+    ax.plot(t_01, df_m.loc[frn, most_dang_type], 'o', color='k')
+    t_01 = round(t_01/365-10, 1)
+  except IndexError:
+    t_01 = 'N/A'
+
+  if annoty is not None:    
     # for most-dangerous double
     # calculate genotype freq at last day
     x_20 = df_m[most_dang_type].tail(1).values[0]
-    # calculate time until it's 1% of total genotype freq
-    # Get first row # that's bigger than threshold
-    threshold = 0.01
-    try:
-      frn = df_m[df_m[most_dang_type].gt(threshold)].index[0]
-      t_01 = df_m.loc[frn, 'time_elapsed']
-      t_01 = round(t_01/365-10, 1)
-    except IndexError:
-      t_01 = 'N/A'
     # calculate area under median curve
     yaxis = df_m[most_dang_type].values
     xaxis = df_m['time_elapsed'].values
