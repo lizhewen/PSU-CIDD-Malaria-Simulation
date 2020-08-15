@@ -26,5 +26,5 @@ mdr_output/
 mdr_analysis/raw_data/
 mdr_analysis/__pycache__/
 mdr_analysis/.ipynb_checkpoints
-mdr_analysis/generated_figures
+!mdr_analysis/generated_figures/.gitkeep
 mdr_analysis/*-Copy*.ipynb
