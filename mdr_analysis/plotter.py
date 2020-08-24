@@ -16,14 +16,29 @@ def fig1_plot_IQR(ax, df_l, df_m, df_u, drug, annoty=None):
   df_nu = df_nu.iloc[FIRST_ROW_AFTER_BURNIN:]
   col_names = list(df.columns)
   mdr_cases = col_names[:-5] # Last five columns are not about MDR
-  mdr_cases.reverse() # reverse to plot most-dangerous type latest
   # Loop thru each MDR case
   for mdr_case in mdr_cases:
     color = coloring_legend(mdr_case, 1)
-    ax.plot(df['time_elapsed'], df[mdr_case], 
-            color=color)
+    ax.plot(df['time_elapsed'], df[mdr_case], color=color)
     ax.fill_between(df_m['time_elapsed'], df_nl[mdr_case], df_nu[mdr_case], 
                     color=color, alpha=0.25)
+  
+  # get the most dangerous double type for annotation
+  most_dang_type = mdr_cases[-1]
+  # Mark where it exceeds the 10%
+  try:      
+    frn_tenp = df[df[most_dang_type].gt(0.1)].index[0]
+    ax.plot(df.loc[frn_tenp, 'time_elapsed'], 
+            df.loc[frn_tenp, most_dang_type], 'o', color='k')
+  except:
+    pass # Do not annotate if not reached
+  # Mark where it exceeds the 1%
+  try:      
+    frn_onep = df[df[most_dang_type].gt(0.01)].index[0]
+    ax.plot(df.loc[frn_onep, 'time_elapsed'], 
+            df.loc[frn_onep, most_dang_type], 'o', color='k')
+  except:
+    pass # Do not annotate if not reached
 
 def fig1_plot_vars(ax, dflist, drug):
   # Highest is 2-2 for DHA-PPQ
