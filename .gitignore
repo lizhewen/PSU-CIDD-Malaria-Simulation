@@ -23,7 +23,8 @@ mdr_cluster_script/*.e*
 mdr_cluster_script/*.o*
 
 mdr_output/
-mdr_analysis/raw_data/
+mdr_analysis/raw_data/*/
+!mdr_analysis/raw_data/rename.sh
 mdr_analysis/__pycache__/
 mdr_analysis/.ipynb_checkpoints
 !mdr_analysis/generated_figures/.gitkeep
