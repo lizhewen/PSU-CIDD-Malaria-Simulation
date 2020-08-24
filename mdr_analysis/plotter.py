@@ -81,10 +81,20 @@ def fig2_dangerous_triple(ax, df_l, df_m, df_u, df_ll, df_uu, pattern, annoty=No
     # for most_dange_trip type 1 
     # calculate genotype freq at last day
     x_20 = df_m.filter(regex=pattern, axis=1).sum(axis=1).tail(1).values[0]
-    # calculate area under median curve
+    # calculate area under median curve, with IQR
     yaxis = df_m.filter(regex=pattern, axis=1).sum(axis=1).values
     xaxis = df_m['time_elapsed'].values
     auc = np.trapz(yaxis, x=xaxis)
+    # lower quartile
+    yaxis_l = df_l.filter(regex=pattern, axis=1).sum(axis=1).values
+    xaxis_l = df_l['time_elapsed'].values
+    auc_l = np.trapz(yaxis_l, x=xaxis_l)
+    auc_l = round(auc_l, 2)
+    # upper quartile
+    yaxis_u = df_u.filter(regex=pattern, axis=1).sum(axis=1).values
+    xaxis_u = df_u['time_elapsed'].values
+    auc_u = np.trapz(yaxis_u, x=xaxis_u)
+    auc_u = round(auc_u, 2)
 
     # annotate
     x_20 = round(x_20, 3)
@@ -93,7 +103,7 @@ def fig2_dangerous_triple(ax, df_l, df_m, df_u, df_ll, df_uu, pattern, annoty=No
     annotation_string += "\n"
     annotation_string += r"$T_{.01}$ = %s" % t_01
     annotation_string += "\n"
-    annotation_string += "AUC = %s" % auc
+    annotation_string += "AUC = %s (%s-%s)" % (auc, auc_l, auc_u)
     if ntf is not None:
       annotation_string += "\n"
       annotation_string += "NTF = %s" % ntf
@@ -154,6 +164,16 @@ def fig2_double_and_higher(ax, df_l, df_m, df_u, df_ll, df_uu, drug, annoty=None
     yaxis = df_m[most_dang_type].values
     xaxis = df_m['time_elapsed'].values
     auc = np.trapz(yaxis, x=xaxis)
+    # lower quartile
+    yaxis_l = df_l[most_dang_type].values
+    xaxis_l = df_l['time_elapsed'].values
+    auc_l = np.trapz(yaxis_l, x=xaxis_l)
+    auc_l = round(auc_l, 2)
+    # upper quartile
+    yaxis_u = df_u[most_dang_type].values
+    xaxis_u = df_u['time_elapsed'].values
+    auc_u = np.trapz(yaxis_u, x=xaxis_u)
+    auc_u = round(auc_u, 2)
 
     # annotate
     x_20 = round(x_20, 3)
@@ -162,5 +182,5 @@ def fig2_double_and_higher(ax, df_l, df_m, df_u, df_ll, df_uu, drug, annoty=None
     annotation_string += "\n"
     annotation_string += r"$T_{.01}$ = %s" % t_01
     annotation_string += "\n"
-    annotation_string += "AUC = %s" % auc
+    annotation_string += "AUC = %s (%s-%s)" % (auc, auc_l, auc_u)
     ax.text(ANNOTATION_X_LOCATION, annoty*0.65, annotation_string)
