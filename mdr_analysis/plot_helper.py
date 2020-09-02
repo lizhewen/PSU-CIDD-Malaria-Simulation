@@ -39,6 +39,7 @@ def IQR_compute(rawfilepattern, parsedatapattern, settherapyinfo):
       for line in read_obj:
         write_obj.write(line)
     df = pd.read_csv(dummy_file, index_col=False, sep='\t')
+    df = df.fillna(0)
     df = df.iloc[:,:152]
     # For each file - append genotype freq to 128 sep dfs
     for (genotype, dfcounter) in zip(ENCODINGDB, range(128)):
