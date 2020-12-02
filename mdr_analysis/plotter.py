@@ -73,14 +73,6 @@ def fig1_plot_vars(ax, dflist, drug):
       df = df.iloc[FIRST_ROW_AFTER_BURNIN:]
       ax.plot(REPORTDAYS, df['2-4'], color='k', alpha=0.1)
 
-'''
-def fig1_plot_naivevars(ax, dflist, drug):
-  for df in dflist:
-    df = df_col_replace(df, drug, option=1)
-    df = df.iloc[FIRST_ROW_AFTER_BURNIN:]
-    ax.plot(df['time_elapsed'], df['0-0'], color='#32CD32', alpha=0.1)
-'''
-
 # pattern is in regex
 # dflist contains 100 dfs from output files
 def fig2_dangerous_triple(ax, dflist, pattern, annoty=None, ntf=None):
@@ -142,7 +134,7 @@ def fig2_dangerous_triple(ax, dflist, pattern, annoty=None, ntf=None):
       annotation_string += "NTF = %s" % ntf
     ax.text(ANNOTATION_X_LOCATION, annoty*0.55, annotation_string)
 
-def fig2_double_and_higher(ax, dflist_arg, drug, annoty=None):
+def fig2_dangerous_double(ax, dflist_arg, drug, annoty=None):
   option = 1
   from constant import REPORTDAYS
   REPORTDAYS = REPORTDAYS[FIRST_ROW_AFTER_BURNIN:]
