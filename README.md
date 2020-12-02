@@ -10,7 +10,7 @@ This version (v3.3) is developed for the Multiple-Drug-Resistant (MDR) paper. Th
 
 This version has implemented Sporozoite Challenge codes, and a modified monthly reporter to output all mutation pair information throughout the simulation. **This version only supports single-location simulations.**
 
-Under `mdr_analysis` folder, it contains several python scripts to parse output files, compute interquartile ranges for a series (default 100) of files from the same simulation settings, and create visualizations. Refer to the Jupyter Notebook `ipynb` files (named with leading numbers) to view available MDR plots.
+Under `mdr_analysis` folder, it contains two plotting programs to create visualizations. Refer to the Jupyter Notebook `ipynb` files (named with leading numbers) to view available MDR plots.
 
 ---
 
