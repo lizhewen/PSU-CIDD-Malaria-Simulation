@@ -104,11 +104,11 @@ def fig2_dangerous_triple(ax, dflist, pattern, annoty=None, ntf=None):
       break
   if idx_one_percent != -1:
     ax.plot(REPORTDAYS[idx_one_percent], IQR_result[2][idx_one_percent], 'o', color='k')
-  if idx_ten_percent != -1:
-    ax.plot(REPORTDAYS[idx_ten_percent], IQR_result[2][idx_ten_percent], 'o', color='k')
-    t_01 = round(REPORTDAYS[idx_ten_percent]/365-10, 1)
+    t_01 = round(REPORTDAYS[idx_one_percent]/365-10, 1)
   else:
     t_01 = 'N/A'
+  if idx_ten_percent != -1:
+    ax.plot(REPORTDAYS[idx_ten_percent], IQR_result[2][idx_ten_percent], 'o', color='k')
   # Calc NTF and annotate if needed
   if annoty is not None:
     # calculate genotype freq at last day
@@ -182,11 +182,11 @@ def fig2_dangerous_double(ax, dflist_arg, drug, annoty=None):
       break
   if idx_one_percent != -1:
     ax.plot(REPORTDAYS[idx_one_percent], all_MDR_IQR[-1][2][idx_one_percent], 'o', color='k')
-  if idx_ten_percent != -1:
-    ax.plot(REPORTDAYS[idx_ten_percent], all_MDR_IQR[-1][2][idx_ten_percent], 'o', color='k')
-    t_01 = round(REPORTDAYS[idx_ten_percent]/365-10, 1)
+    t_01 = round(REPORTDAYS[idx_one_percent]/365-10, 1)
   else:
     t_01 = 'N/A'
+  if idx_ten_percent != -1:
+    ax.plot(REPORTDAYS[idx_ten_percent], all_MDR_IQR[-1][2][idx_ten_percent], 'o', color='k')
 
   if annoty is not None:    
     # for most-dangerous double
