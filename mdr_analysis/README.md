@@ -6,6 +6,10 @@ The Python files (end in `.py`) contain all the plotting functions (for visualiz
 
 This program is open-sourced under MIT License. There is much freedom with MIT License, but you must include the original license here and properly cite this as your source.
 
+## Plotting Scripts (Updated Dec 2020)
+
+For ease of generating both Fig. 1 and Fig. 2 for all 12 settings of different prevalence and coverage, several Python scripts are also provided in this folder. Refer to `script_run_for_all_sets.ipynb` notebook for more details and how to use.
+
 ## Legend Coloring
 
 For the genotype evolution trend plots, there are two options of calculating drug-resistance strength -
