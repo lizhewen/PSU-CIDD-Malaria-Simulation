@@ -4,7 +4,8 @@
 # # Fig.1 - Single- and Double-Resistant Genotype Trends (w/ 3x2 subpanels)
 
 def script_fig1_plotter(file_path_adpcyc, file_path_aac, plot_savepath, 
-                        TITLE_FONTSIZE=18, XLABEL_FONTSIZE=15):
+                        TITLE_FONTSIZE=18, XLABEL_FONTSIZE=15, 
+                        YLABEL_PADDING = 150):
 
     import pandas as pd
     import matplotlib.pyplot as plt
@@ -66,5 +67,19 @@ def script_fig1_plotter(file_path_adpcyc, file_path_aac, plot_savepath,
     ax5.xaxis.set_major_formatter(ticks_x)
     ax6.xaxis.set_major_locator(ticker.MultipleLocator(xlocator))
     ax6.xaxis.set_major_formatter(ticks_x)
+
+    ax1.set_ylabel('w.r.t. DHA-PPQ', multialignment='left', 
+                   horizontalalignment='left', rotation=0, 
+                   fontsize=XLABEL_FONTSIZE, labelpad=YLABEL_PADDING)
+    ax3.set_ylabel('w.r.t. ASAQ', multialignment='left', 
+                   horizontalalignment='left', rotation=0, 
+                   fontsize=XLABEL_FONTSIZE, labelpad=YLABEL_PADDING)
+    ax5.set_ylabel('w.r.t. AL', multialignment='left', 
+                   horizontalalignment='left', rotation=0, 
+                   fontsize=XLABEL_FONTSIZE, labelpad=YLABEL_PADDING)
+    ax7.set_ylabel('w.r.t. AL \nbut starting with \nKNY genotypes', 
+                   multialignment='left', horizontalalignment='left', 
+                   rotation=0, fontsize=XLABEL_FONTSIZE, 
+                   labelpad=YLABEL_PADDING)
 
     plt.savefig(fname=plot_savepath, format='svg')

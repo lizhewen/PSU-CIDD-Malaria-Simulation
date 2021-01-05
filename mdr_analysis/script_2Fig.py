@@ -14,7 +14,8 @@ from plotter import fig2_dangerous_triple, fig2_dangerous_double
 
 def script_fig2_plotter(file_path_cyc, file_path_mft, file_path_adpcyc, plot_savepath, 
                         MFT_nft_path, Cyc_ntf_path, AC_ntf_path, 
-                        TITLE_FONTSIZE=20, XLABEL_FONTSIZE=18):
+                        TITLE_FONTSIZE=20, XLABEL_FONTSIZE=18, 
+                        YLABEL_PADDING = 290):
 
     plt.rcParams['figure.figsize'] = [20, 12]
     rc = {"font.family" : "sans-serif", 
@@ -144,6 +145,24 @@ def script_fig2_plotter(file_path_cyc, file_path_mft, file_path_adpcyc, plot_sav
     ax14.xaxis.set_major_formatter(ticks_x)
     ax15.xaxis.set_major_locator(ticker.MultipleLocator(xlocator))
     ax15.xaxis.set_major_formatter(ticks_x)
+
+    ax1.set_ylabel('Triple-resistant \ngenotypes carrying \n76T, 86Y, Y184, 580Y, \nand double-copy $pfpm2/3$', 
+                  multialignment='left', 
+                  horizontalalignment='left', rotation=0, 
+                  fontsize=XLABEL_FONTSIZE, labelpad=YLABEL_PADDING)
+    ax4.set_ylabel('Triple-resistant \ngenotypes carrying \nK76, N86, 184F, 580Y, \nand double-copy $pfpm2/3$', 
+                  multialignment='left', 
+                  horizontalalignment='left', rotation=0, 
+                  fontsize=XLABEL_FONTSIZE, labelpad=YLABEL_PADDING)
+    ax7.set_ylabel('Double-resistant genotypes \nto DHA-PPQ', multialignment='left', 
+                  horizontalalignment='left', rotation=0, 
+                  fontsize=XLABEL_FONTSIZE, labelpad=YLABEL_PADDING)
+    ax10.set_ylabel('Double-resistant genotypes \nto ASAQ', multialignment='left', 
+                    horizontalalignment='left', rotation=0, 
+                    fontsize=XLABEL_FONTSIZE, labelpad=YLABEL_PADDING)
+    ax13.set_ylabel('Double-resistant genotypes \nto AL', multialignment='left', 
+                    horizontalalignment='left', rotation=0, 
+                    fontsize=XLABEL_FONTSIZE, labelpad=YLABEL_PADDING)
 
     fig.add_subplot(111, frameon=False)
     # hide tick and tick label of the big axis
