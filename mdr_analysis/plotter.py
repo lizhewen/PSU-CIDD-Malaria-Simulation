@@ -65,13 +65,13 @@ def fig1_plot_vars(ax, dflist, drug):
     for df in dflist:
       df = df_col_replace(df, drug, option=1)
       df = df.iloc[FIRST_ROW_AFTER_BURNIN:]
-      ax.plot(REPORTDAYS, df['2-2'], color='#F88379', alpha=0.1)
+      ax.plot(REPORTDAYS, df['2-2'], color='#fc9272', alpha=0.1)
   # Highest is 2-4 for ASAQ & AL
   else:
     for df in dflist:
       df = df_col_replace(df, drug, option=1)
       df = df.iloc[FIRST_ROW_AFTER_BURNIN:]
-      ax.plot(REPORTDAYS, df['2-4'], color='k', alpha=0.1)
+      ax.plot(REPORTDAYS, df['2-4'], color='#99000d', alpha=0.1)
 
 # pattern is in regex
 # dflist contains 100 dfs from output files

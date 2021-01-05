@@ -19,13 +19,12 @@ For the genotype evolution trend plots, there are two options of calculating dru
 
 | Resistance Strength        | Drug Efficacy | Legend Color            |
 | -------------------------- | ------------- | ----------------------- |
-| 0-0                        | [90,∞)        | \#32CD32, green         |
-| *N/A*                      | [80,90)       | \#3497FF, blue          |
-| 1-1                        | *N/A*         | \#FAD996, light orange  |
-| 1-2                        | [70,80)       | \#FFAB00, medium orange |
-| 1-3                        | *N/A*         | \#C76400, dark orange   |
-| 2-2                        | [60,70)       | \#F88379, coral red     |
-| 2-3                        | [0,60)        | \#FF1A00, medium red    |
-| 2-4, most dangerous double | *N/A*         | \#000000, black         |
-| 3-5, most dangerous triple | *N/A*         | #800080, purple         |
-
+| 0-0                        | [90,∞)        | \#32cd32, green         |
+| *N/A*                      | [80,90)       | \#636363, grey          |
+| 1-1                        | *N/A*         | \#b0ebf7, light blue    |
+| 1-2                        | [70,80)       | \#74a9cf, medium blue   |
+| 1-3                        | *N/A*         | \#045a8d, dark blue     |
+| 2-2                        | [60,70)       | \#fc9272, light red     |
+| 2-3                        | [0,60)        | \#ef3b2c, medium red    |
+| 2-4, most dangerous double | *N/A*         | \#99000d, dark red      |
+| 3-5, most dangerous triple | *N/A*         | \#800080, purple        |
