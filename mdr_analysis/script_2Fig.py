@@ -13,7 +13,7 @@ from plot_helper import NTF_IQR_compute
 from plotter import fig2_dangerous_triple, fig2_dangerous_double
 
 def script_fig2_plotter(file_path_cyc, file_path_mft, file_path_adpcyc, plot_savepath, 
-                        MFT_nft_path, Cyc_ntf_path, AC_ntf_path, 
+                        MFT_nft_path, Cyc_ntf_path, AC_ntf_path, IQR_only=False, 
                         TITLE_FONTSIZE=20, XLABEL_FONTSIZE=18, 
                         YLABEL_PADDING = 290):
 
@@ -51,25 +51,25 @@ def script_fig2_plotter(file_path_cyc, file_path_mft, file_path_adpcyc, plot_sav
 
     # plot trends for most-dangerous-triple (2 types)
     #  MFT
-    fig2_dangerous_triple(ax1, dflist_mft, 'TYY..Y2.')
-    fig2_dangerous_triple(ax4, dflist_mft, 'KNF..Y2.')
-    fig2_dangerous_double(ax7, dflist_mft, 'DHA-PPQ')
-    fig2_dangerous_double(ax10, dflist_mft, 'ASAQ')
-    fig2_dangerous_double(ax13, dflist_mft, 'AL')
+    fig2_dangerous_triple(ax1, dflist_mft, 'TYY..Y2.', IQR_only)
+    fig2_dangerous_triple(ax4, dflist_mft, 'KNF..Y2.', IQR_only)
+    fig2_dangerous_double(ax7, dflist_mft, 'DHA-PPQ', IQR_only)
+    fig2_dangerous_double(ax10, dflist_mft, 'ASAQ', IQR_only)
+    fig2_dangerous_double(ax13, dflist_mft, 'AL', IQR_only)
 
     #  Cycling
-    fig2_dangerous_triple(ax2, dflist_cyc, 'TYY..Y2.')
-    fig2_dangerous_triple(ax5, dflist_cyc, 'KNF..Y2.')
-    fig2_dangerous_double(ax8, dflist_cyc, 'DHA-PPQ')
-    fig2_dangerous_double(ax11, dflist_cyc, 'ASAQ')
-    fig2_dangerous_double(ax14, dflist_cyc, 'AL')
+    fig2_dangerous_triple(ax2, dflist_cyc, 'TYY..Y2.', IQR_only)
+    fig2_dangerous_triple(ax5, dflist_cyc, 'KNF..Y2.', IQR_only)
+    fig2_dangerous_double(ax8, dflist_cyc, 'DHA-PPQ', IQR_only)
+    fig2_dangerous_double(ax11, dflist_cyc, 'ASAQ', IQR_only)
+    fig2_dangerous_double(ax14, dflist_cyc, 'AL', IQR_only)
 
     #  Adaptive Cycling
-    fig2_dangerous_triple(ax3, dflist_adpcyc, 'TYY..Y2.')
-    fig2_dangerous_triple(ax6, dflist_adpcyc, 'KNF..Y2.')
-    fig2_dangerous_double(ax9, dflist_adpcyc, 'DHA-PPQ')
-    fig2_dangerous_double(ax12, dflist_adpcyc, 'ASAQ')
-    fig2_dangerous_double(ax15, dflist_adpcyc, 'AL')
+    fig2_dangerous_triple(ax3, dflist_adpcyc, 'TYY..Y2.', IQR_only)
+    fig2_dangerous_triple(ax6, dflist_adpcyc, 'KNF..Y2.', IQR_only)
+    fig2_dangerous_double(ax9, dflist_adpcyc, 'DHA-PPQ', IQR_only)
+    fig2_dangerous_double(ax12, dflist_adpcyc, 'ASAQ', IQR_only)
+    fig2_dangerous_double(ax15, dflist_adpcyc, 'AL', IQR_only)
 
     # Labeling Strategies
     ax1.set_title('MFT')
@@ -114,25 +114,25 @@ def script_fig2_plotter(file_path_cyc, file_path_mft, file_path_adpcyc, plot_sav
     ax15.set_ylim(lower_row_lowlim, lower_row_lim)
 
     #  MFT
-    fig2_dangerous_triple(ax1, dflist_mft, 'TYY..Y2.', row1ylim, MFT_ntf)
-    fig2_dangerous_triple(ax4, dflist_mft, 'KNF..Y2.', row2ylim)
-    fig2_dangerous_double(ax7, dflist_mft, 'DHA-PPQ', lower_row_lim)
-    fig2_dangerous_double(ax10, dflist_mft, 'ASAQ', lower_row_lim)
-    fig2_dangerous_double(ax13, dflist_mft, 'AL', lower_row_lim)
+    fig2_dangerous_triple(ax1, dflist_mft, 'TYY..Y2.', IQR_only, row1ylim, MFT_ntf)
+    fig2_dangerous_triple(ax4, dflist_mft, 'KNF..Y2.', IQR_only, row2ylim)
+    fig2_dangerous_double(ax7, dflist_mft, 'DHA-PPQ', IQR_only, lower_row_lim)
+    fig2_dangerous_double(ax10, dflist_mft, 'ASAQ', IQR_only, lower_row_lim)
+    fig2_dangerous_double(ax13, dflist_mft, 'AL', IQR_only, lower_row_lim)
 
     #  Cycling
-    fig2_dangerous_triple(ax2, dflist_cyc, 'TYY..Y2.', row1ylim, Cyc_ntf)
-    fig2_dangerous_triple(ax5, dflist_cyc, 'KNF..Y2.', row2ylim)
-    fig2_dangerous_double(ax8, dflist_cyc, 'DHA-PPQ', lower_row_lim)
-    fig2_dangerous_double(ax11, dflist_cyc, 'ASAQ', lower_row_lim)
-    fig2_dangerous_double(ax14, dflist_cyc, 'AL', lower_row_lim)
+    fig2_dangerous_triple(ax2, dflist_cyc, 'TYY..Y2.', IQR_only, row1ylim, Cyc_ntf)
+    fig2_dangerous_triple(ax5, dflist_cyc, 'KNF..Y2.', IQR_only, row2ylim)
+    fig2_dangerous_double(ax8, dflist_cyc, 'DHA-PPQ', IQR_only, lower_row_lim)
+    fig2_dangerous_double(ax11, dflist_cyc, 'ASAQ', IQR_only, lower_row_lim)
+    fig2_dangerous_double(ax14, dflist_cyc, 'AL', IQR_only, lower_row_lim)
 
     #  Adaptive Cycling
-    fig2_dangerous_triple(ax3, dflist_adpcyc, 'TYY..Y2.', row1ylim, AC_ntf)
-    fig2_dangerous_triple(ax6, dflist_adpcyc, 'KNF..Y2.', row2ylim)
-    fig2_dangerous_double(ax9, dflist_adpcyc, 'DHA-PPQ', lower_row_lim)
-    fig2_dangerous_double(ax12, dflist_adpcyc, 'ASAQ', lower_row_lim)
-    fig2_dangerous_double(ax15, dflist_adpcyc, 'AL', lower_row_lim)
+    fig2_dangerous_triple(ax3, dflist_adpcyc, 'TYY..Y2.', IQR_only, row1ylim, AC_ntf)
+    fig2_dangerous_triple(ax6, dflist_adpcyc, 'KNF..Y2.', IQR_only, row2ylim)
+    fig2_dangerous_double(ax9, dflist_adpcyc, 'DHA-PPQ', IQR_only, lower_row_lim)
+    fig2_dangerous_double(ax12, dflist_adpcyc, 'ASAQ', IQR_only, lower_row_lim)
+    fig2_dangerous_double(ax15, dflist_adpcyc, 'AL', IQR_only, lower_row_lim)
 
     # Labeling Strategies
     ax1.set_title('MFT', fontsize=TITLE_FONTSIZE)

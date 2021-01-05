@@ -4,6 +4,7 @@
 # # Fig.1 - Single- and Double-Resistant Genotype Trends (w/ 3x2 subpanels)
 
 def script_fig1_plotter(file_path_adpcyc, file_path_aac, plot_savepath, 
+                        IQR_only=False, 
                         TITLE_FONTSIZE=18, XLABEL_FONTSIZE=15, 
                         YLABEL_PADDING = 150):
 
@@ -40,13 +41,13 @@ def script_fig1_plotter(file_path_adpcyc, file_path_aac, plot_savepath,
 
     (ax1, ax2), (ax3, ax4), (ax5, ax6), (ax7, ax8) = axs
 
-    fig1_plot_IQR(ax1, dflist, 'DHA-PPQ')
+    fig1_plot_IQR(ax1, dflist, 'DHA-PPQ', IQR_only)
     fig1_plot_vars(ax2, dflist, 'DHA-PPQ')
-    fig1_plot_IQR(ax3, dflist, 'ASAQ')
+    fig1_plot_IQR(ax3, dflist, 'ASAQ', IQR_only)
     fig1_plot_vars(ax4, dflist, 'ASAQ')
-    fig1_plot_IQR(ax5, dflist, 'AL')
+    fig1_plot_IQR(ax5, dflist, 'AL', IQR_only)
     fig1_plot_vars(ax6, dflist, 'AL')
-    fig1_plot_IQR(ax7, dflist_aac, 'AL')
+    fig1_plot_IQR(ax7, dflist_aac, 'AL', IQR_only)
     fig1_plot_vars(ax8, dflist_aac, 'AL')
 
     ax1.set_title('Median (IQR) genotype frequencies \nfor single- and double-resistants', fontsize=TITLE_FONTSIZE)

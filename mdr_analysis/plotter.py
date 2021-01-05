@@ -9,7 +9,7 @@ from plot_helper import xaxis_label_ticker, coloring_legend, df_col_replace
 FIRST_ROW_AFTER_BURNIN = 120
 ANNOTATION_X_LOCATION = 3833
 
-def fig1_plot_IQR(ax, dflist_arg, drug, annoty=None):
+def fig1_plot_IQR(ax, dflist_arg, drug, IQR_only=False, annoty=None):
   option = 1
   from constant import REPORTDAYS
   REPORTDAYS = REPORTDAYS[FIRST_ROW_AFTER_BURNIN:]
@@ -39,8 +39,9 @@ def fig1_plot_IQR(ax, dflist_arg, drug, annoty=None):
                     color=color)
     ax.fill_between(REPORTDAYS, all_MDR_IQR[i][1], all_MDR_IQR[i][3], 
                     color=color, alpha=0.25)
-    ax.fill_between(REPORTDAYS, all_MDR_IQR[i][0], all_MDR_IQR[i][4], 
-                    color=color, alpha=0.1)
+    if IQR_only == False:
+      ax.fill_between(REPORTDAYS, all_MDR_IQR[i][0], all_MDR_IQR[i][4], 
+                      color=color, alpha=0.1)
   # Mark where it exceeds the 1% and 10% for most-dangerous type
   idx_one_percent = -1
   idx_ten_percent = -1
@@ -75,7 +76,7 @@ def fig1_plot_vars(ax, dflist, drug):
 
 # pattern is in regex
 # dflist contains 100 dfs from output files
-def fig2_dangerous_triple(ax, dflist, pattern, annoty=None, ntf=None):
+def fig2_dangerous_triple(ax, dflist, pattern, IQR_only=False, annoty=None, ntf=None):
   from constant import REPORTDAYS
   # combine columns wanted into one df
   df_IQR = pd.DataFrame(columns = range(361)) # 361 rows of data are in output file
@@ -90,7 +91,8 @@ def fig2_dangerous_triple(ax, dflist, pattern, annoty=None, ntf=None):
   # plots
   ax.plot(REPORTDAYS, IQR_result[2], color='#800080') # median
   ax.fill_between(REPORTDAYS, IQR_result[1], IQR_result[3], color='#800080', alpha=0.25)
-  ax.fill_between(REPORTDAYS, IQR_result[0], IQR_result[4], color='#800080', alpha=0.1)
+  if IQR_only == False:
+    ax.fill_between(REPORTDAYS, IQR_result[0], IQR_result[4], color='#800080', alpha=0.1)
   # Mark where it exceeds the 1% and 10%
   idx_one_percent = -1
   idx_ten_percent = -1
@@ -134,7 +136,7 @@ def fig2_dangerous_triple(ax, dflist, pattern, annoty=None, ntf=None):
       annotation_string += "NTF = %s" % ntf
     ax.text(ANNOTATION_X_LOCATION, annoty*0.55, annotation_string)
 
-def fig2_dangerous_double(ax, dflist_arg, drug, annoty=None):
+def fig2_dangerous_double(ax, dflist_arg, drug, IQR_only=False, annoty=None):
   option = 1
   from constant import REPORTDAYS
   REPORTDAYS = REPORTDAYS[FIRST_ROW_AFTER_BURNIN:]
@@ -166,8 +168,9 @@ def fig2_dangerous_double(ax, dflist_arg, drug, annoty=None):
                       color=color)
       ax.fill_between(REPORTDAYS, all_MDR_IQR[i][1], all_MDR_IQR[i][3], 
                       color=color, alpha=0.25)
-      ax.fill_between(REPORTDAYS, all_MDR_IQR[i][0], all_MDR_IQR[i][4], 
-                      color=color, alpha=0.1)
+      if IQR_only == False:
+        ax.fill_between(REPORTDAYS, all_MDR_IQR[i][0], all_MDR_IQR[i][4], 
+                        color=color, alpha=0.1)
     
   # Mark where it exceeds the 1% and 10% for most-dangerous type
   idx_one_percent = -1
