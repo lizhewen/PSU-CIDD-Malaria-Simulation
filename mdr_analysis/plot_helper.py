@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
-from constant import HEADLINE, ENCODINGDB, REPORTDAYS
+from constant import HEADLINE, ENCODINGDB, REPORTDAYS, REPORTDAYS, FIRST_ROW_AFTER_BURNIN
 
 def xaxis_label_ticker(scale_x=365, burnin_year=10):
   # Ticker function that labels x-axis in years
@@ -242,13 +242,13 @@ def coloring_legend(mdr_case, option):
   # for drug-mutationEvent format
   if option == 1:
     legend_color = {
-      "0-0": "#32cd32", # green for wild type
-      "1-1": "#b0ebf7", # light blue
-      "1-2": "#74a9cf", # medium blue
-      "1-3": "#045a8d", # dark blue
-      "2-2": "#fc9272", # light red
-      "2-3": "#ef3b2c", # medium red
-      "2-4": "#99000d"  # dark red
+      "0-0": "#32CD32", # green for wild type
+      "1-1": "#FAD996", # light orange
+      "1-2": "#FFAB00", # medium orange
+      "1-3": "#C76400", # dark orange
+      "2-2": "#F88379", # coral red
+      "2-3": "#FF1A00", # medium red
+      "2-4": "k"        # black
     }
     return legend_color.get(mdr_case)
   
@@ -256,12 +256,37 @@ def coloring_legend(mdr_case, option):
   elif option == 2:
     percentage = int(mdr_case*100)
     if percentage >= 90:
-      return "#32cd32" # [90,∞) - green
+      return "#32CD32" # [90,∞) - green
     elif percentage >= 80:
-      return "#636363" # [80,90) - grey
+      return "#3497FF" # [80,90) - blue
     elif percentage >= 70:
-      return "#74a9cf" # [70,80) - medium blue
+      return "#FFAB00" # [70,80) - medium orange
     elif percentage >= 60:
-      return "#fc9272" # [60,70) - light red
+      return "#F88379" # [60,70) - coral red
     else:
-      return "#ef3b2c" # [0,60) - medium red
+      return "#FF1A00" # [0,60) - medium red
+
+def calculate_AUC_from_dflist_for_dangerous_triple(dflist, pattern):
+  from constant import REPORTDAYS, FIRST_ROW_AFTER_BURNIN
+  REPORTDAYS = REPORTDAYS[FIRST_ROW_AFTER_BURNIN:]
+  AUCs = []
+  for onerun in dflist:
+    geno_freq = onerun.filter(regex=pattern, axis=1).sum(axis=1)
+    geno_freq = geno_freq[FIRST_ROW_AFTER_BURNIN:]
+    AUCs.append(np.trapz(geno_freq, x=REPORTDAYS))
+  return AUCs
+
+def calculate_AUC_from_dflist_for_dangerous_double(dflist, drug):
+  from constant import REPORTDAYS, FIRST_ROW_AFTER_BURNIN
+  if drug == 'DHA-PPQ':
+    most_dangerous_mdr = '2-2'
+  else:
+    most_dangerous_mdr = '2-4'
+  
+  REPORTDAYS = REPORTDAYS[FIRST_ROW_AFTER_BURNIN:]
+  AUCs = []
+  for onerun in dflist:
+    new_df = df_col_replace(onerun, drug, 1)
+    geno_freq = new_df[most_dangerous_mdr][FIRST_ROW_AFTER_BURNIN:]
+    AUCs.append(np.trapz(geno_freq, x=REPORTDAYS))
+  return AUCs
