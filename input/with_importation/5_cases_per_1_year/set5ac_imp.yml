@@ -74,7 +74,7 @@ location_db:
 
   #transmission intensity
   #if the number of values less than number of locations, the first value will be applied for all locations
-  beta_by_location: [0.02]
+  beta_by_location: [0.0095]
 
   #if the number of values less than number of locations, the first value will be applied for all locations
   population_size_by_location: [1000000]
@@ -867,33 +867,33 @@ events:
       # 4 - Adaptive Cycling, with 12-month delay
       #     Line 642 to change delay
       - day: 2020/1/1
-        strategy_id: 3
+        strategy_id: 4
   - name: introduce_parasites_periodically
     info:
       - location: 0
         parasite_info:
           # TYY--Y2x (row 1)
-          - duration: 1825
+          - duration: 365
             genotype_id: 78 
             number_of_cases: 1
             start_day: 2020/1/1 
           # KNF--Y2x (row 2)
-          - duration: 1825
+          - duration: 365
             genotype_id: 22 
             number_of_cases: 1
             start_day: 2020/1/1 
           # KNY--Y2x (wild type at all other loci)
-          - duration: 1825
+          - duration: 365
             genotype_id: 22 
             number_of_cases: 6
             start_day: 2020/1/1 
           # TYY--Y1x
-          - duration: 1825
+          - duration: 365
             genotype_id: 76 
             number_of_cases: 1
             start_day: 2020/1/1 
           # KNF--Y1x
-          - duration: 1825
+          - duration: 365
             genotype_id: 20 
             number_of_cases: 1
             start_day: 2020/1/1 
