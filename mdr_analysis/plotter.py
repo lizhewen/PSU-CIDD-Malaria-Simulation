@@ -5,9 +5,7 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 
 from plot_helper import xaxis_label_ticker, coloring_legend, df_col_replace
-
-FIRST_ROW_AFTER_BURNIN = 120
-ANNOTATION_X_LOCATION = 3833
+from constant import FIRST_ROW_AFTER_BURNIN, ANNOTATION_X_LOCATION
 
 def fig1_plot_IQR(ax, dflist_arg, drug, IQR_only=False, annoty=None):
   option = 1
@@ -213,3 +211,39 @@ def fig2_dangerous_double(ax, dflist_arg, drug, IQR_only=False, annoty=None):
     annotation_string += "\n"
     annotation_string += "AUC = %s (%s-%s)" % (auc, auc_l, auc_u)
     ax.text(ANNOTATION_X_LOCATION, annoty*0.55, annotation_string)
+
+# need 100 simulation data for each strategy, as dataframe
+# `m` stands for MFT
+# `c` stands for 5-Year Cycling
+# `a` stands for Adaptive Cycling
+# `option` controls plotting function to 
+# use regex (dangerous triples) or drug x-x pattern (dangerous doubles)
+def fig3_dangerous_triple_or_double_AUC_IQR(ax, m, c, a, pattern, option):
+  from plot_helper import calculate_AUC_from_dflist_for_dangerous_triple, \
+                          calculate_AUC_from_dflist_for_dangerous_double
+  labels = ['MFT', 'Adaptive Cycling', '5-Year Cycling']
+
+  # calculate 90% CI and IQR, for all 3 strategies
+  if option == 'triple':
+    AUCs_m = calculate_AUC_from_dflist_for_dangerous_triple(m, pattern)
+    AUCs_c = calculate_AUC_from_dflist_for_dangerous_triple(c, pattern)
+    AUCs_a = calculate_AUC_from_dflist_for_dangerous_triple(a, pattern)
+  elif option == 'double':
+    AUCs_m = calculate_AUC_from_dflist_for_dangerous_double(m, pattern)
+    AUCs_c = calculate_AUC_from_dflist_for_dangerous_double(c, pattern)
+    AUCs_a = calculate_AUC_from_dflist_for_dangerous_double(a, pattern)
+  else:
+    raise ValueError("Invalid option provided in argument.")
+
+  all_data = [AUCs_m, AUCs_c, AUCs_a]
+  # rectangular box plot
+  bplot = ax.boxplot(all_data,
+                     vert=False,  # vertical box alignment
+                     patch_artist=True,  # fill with color
+                     showfliers=False, # just show IQR and 90% range 
+                     medianprops=dict(color='k'), # black median line 
+                     labels=labels)  # will be used to label x-ticks
+  
+  colors = ['#cadab0', '#a6cfd8', '#d1a29b'] # green, blue, coral
+  for patch, color in zip(bplot['boxes'], colors):
+    patch.set_facecolor(color)

@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
-from constant import HEADLINE, ENCODINGDB, REPORTDAYS
+from constant import HEADLINE, ENCODINGDB, REPORTDAYS, FIRST_ROW_AFTER_BURNIN
 
 def xaxis_label_ticker(scale_x=365, burnin_year=10):
   # Ticker function that labels x-axis in years
