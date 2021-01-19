@@ -157,5 +157,3 @@ FIVE_YR_CYCLING_SWITCH_DAYS = [
     10958    # Residue due to 365-and-calendar difference
 ]
 
-FIRST_ROW_AFTER_BURNIN = 120
-ANNOTATION_X_LOCATION = 3833
