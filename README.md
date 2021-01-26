@@ -6,6 +6,8 @@
 
 ## Release Note
 
+***Jan 25, 2021*: This repo has been migrated under Boni Lab's GitHub account at this [new location](https://github.com/bonilab/malariaibm-generation-of-MDR-mutants). Additional updates will be made to the new location only. This repo is now archived to preserve the commit history.**
+
 This version (v3.3) is developed for the Multiple-Drug-Resistant (MDR) paper. This codebase is based off Dang Nguyen Tran's v3.2 located in [this repo](https://github.com/maciekboni/PSU-CIDD-Malaria-Simulation).
 
 This version has implemented Sporozoite Challenge codes, and a modified monthly reporter to output all mutation pair information throughout the simulation. **This version only supports single-location simulations.**
